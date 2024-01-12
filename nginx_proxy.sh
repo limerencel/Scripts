@@ -56,7 +56,7 @@ if [ -f "$filename" ]; then
   read -p "Modify this config file now? (yes/no) " choice
   case $choice in
     yes|y)
-      . ./"$filename"
+      . ./"$filename" "$domain"
       ;;
     no|n)
       echo "Exiting script."
@@ -70,7 +70,7 @@ else
   read -p "Do you need to download it now and run it? (yes/no) " download
   case $download in
     yes|y)
-      curl -o "$filename" https://raw.githubusercontent.com/limerencel/Scripts/main/create_sites.sh && chmod +x "$filename" && . ./"$filename"
+      curl -o "$filename" https://raw.githubusercontent.com/limerencel/Scripts/main/create_sites.sh && chmod +x "$filename" && . ./"$filename" "$domain"
       ;;
     no|n)
       echo "Exiting script."
