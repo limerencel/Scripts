@@ -1,0 +1,51 @@
+server {
+    listen 80;
+    server_name domain.name;
+
+    # This handles all requests
+    location / {
+        # First, check if this is already a request with the security path
+        if ($request_uri !~ "^/token/") {
+            # If not, add the security path
+            rewrite ^/(.*) /token/$1 break;
+        }
+        
+        proxy_pass http://127.0.0.1:55273;
+        
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $host;
+        
+        # Handle redirects properly by removing the security path
+        proxy_redirect /token/ /;
+        
+        # Ensure sub-paths are also handled correctly
+        proxy_redirect /token/panel/ /panel/;
+        proxy_redirect /token/server/ /server/;
+    }
+}
+
+1.You type xray.hoshicc.cc in browser
+2.Nginx receives this request first
+Adds security path
+Forwards to backend: http://127.0.0.1:55273/tqlzBT5zH8MtHu9/
+
+3.Backend app decides to redirect
+Sends 307 response back to Nginx
+Response says "redirect to /tqlzBT5zH8MtHu9/panel/"
+
+4.Nginx processes this redirect response
+Sees it's a 307 redirect
+Uses proxy_redirect rules to transform the URL
+Sends response back to your browser telling it to go to /tqlzBT5zH8MtHu9/panel/
+
+5.Your browser receives the 307 redirect
+Automatically makes a NEW request to xray.hoshicc.cc/tqlzBT5zH8MtHu9/panel/
+You see this new URL in your browser address bar
+This is a completely new request that starts the whole process again
+
+6.This new request hits Nginx again
+Nginx checks if security path is present (it is)
+Forwards to backend without adding another security path
+Backend responds with the actual panel page content
