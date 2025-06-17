@@ -9,7 +9,7 @@ check storage usage: `du -sh /path/to/directory/* | sort -hr`
 | ---------- | ---------------------------------------------- |
 | CPU        | `sysbench cpu --cpu-max-prime=20000 run`       |
 | RAM         | `sysbench memory --memory-total-size=10G run`  |
-| prepare files | `sysbench fileio --file-total-size=1G prepare` |
-| disk bench       | `sysbench fileio --file-test-mode=rndrw run`   |
+| prepare files | `sysbench fileio --file-total-size=1G --file-test-mode=rndrw prepare` |
+| IO bench       | `sysbench fileio --file-total-size=1G --file-test-mode=rndrw run`   |
 | clean up      | `sysbench fileio cleanup`                      |
 
