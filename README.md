@@ -3,7 +3,8 @@ A convenient way to install Docker, loading the script from [get.docker](https:/
 `curl -sSL https://get.docker.com/ | bash`
 
 ## Common commands
-check storage usage: `du -sh /path/to/directory/* | sort -hr`
+check storage usage: `du -sh /path/to/directory/* | sort -hr`  
+running in background: `your_command > /dev/null 2>&1 &`
 ## sysbench benchmark
 | type       | command                                           |
 | ---------- | ---------------------------------------------- |
