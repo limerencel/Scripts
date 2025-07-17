@@ -14,3 +14,12 @@ running in background: `your_command > /dev/null 2>&1 &`
 | IO bench       | `sysbench fileio --file-total-size=1G --file-test-mode=rndrw run`   |
 | clean up      | `sysbench fileio cleanup`                      |
 
+## Google Cloud Run simple temaple
+```bash
+gcloud run deploy [SERVICE_NAME] \
+     --image [DOCKER_IMAGE] \
+     --region [REGION] \
+     --port [PORT] \
+     --platform managed \
+     --allow-unauthenticated
+```
